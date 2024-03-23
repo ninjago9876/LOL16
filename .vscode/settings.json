@@ -1,0 +1,33 @@
+{
+    "files.associations": {
+        "utils.h": "c",
+        "level.h": "c",
+        "player.h": "c",
+        "raycaster.h": "c",
+        "sdl.h": "c",
+        "renderer.h": "c",
+        "unistd.h": "c",
+        "getopt_posix.h": "c",
+        "stdlib.h": "c",
+        "stdio.h": "c",
+        "stdbool.h": "c",
+        "stdint.h": "c",
+        "limits": "c",
+        "algorithm": "c",
+        "string.h": "c",
+        "emulator.h": "c",
+        "lol16emulator.h": "c"
+    },
+    "makefile.makefilePath": "",
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/thomas/Sync_VoA/C C++ Coding/SoftwareRenderer",
+            "binaryPath": "/home/thomas/Sync_VoA/C C++ Coding/SoftwareRenderer/main",
+            "binaryArgs": []
+        }
+    ],
+    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+    "C_Cpp.errorSquiggles": "disabled",
+    "C_Cpp.default.cStandard": "c23",
+    "C_Cpp.default.compilerPath": "/usr/bin/gcc"
+}

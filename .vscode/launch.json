@@ -1,0 +1,15 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Build and Run",
+            "type": "f5anything",
+            "request": "launch",
+            "command": "make clean ; make | tee logs/latest.log ; ./lol16 -a src.asm | tee logs/latest.log -a",
+            "showTerminal": true
+        }
+    ]
+}
