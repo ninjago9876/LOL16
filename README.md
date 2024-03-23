@@ -1,1 +1,1 @@
-Simple Wolfenstein like pseudo-3d software renderer written in C.
+An emulator for my custom CPU architecture, Ludicrously Ordinary Logicunit.
