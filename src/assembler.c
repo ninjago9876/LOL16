@@ -86,23 +86,20 @@ int checkTokenCount(int desiredTokenCount, int tokenCount) {
         printf(HI_RED "Too few valid operands for instruction!\n" COL_RESET);
         return 1;
     }
-    return 0; if (tokens[i] == NULL && i == 1) {
-            return 3;
-        }
-            return 3;
-        }
-int parseInstruction(const char* string, Instruction* instruction, int line) {
+    return 0;
+}
+int parseLine(const char* string, Instruction* instruction, int line) {
     char* tokens[4];
     char current[100];
     strncpy(current, string, strlen(string)+1);
+    if (matches(current, "^[[:space:]]*$")) {
+        return 3;
+    }
     int i = 0;
-    tokens[i] = strtok(current, " \t");
+    tokens[i] = strtok(current, " \t,");
     while (tokens[i] != NULL) {
         i++;
-        tokens[i] = strtok(NULL, ", ");
-        if (tokens[i] == NULL && i == 1) {
-            return 3;
-        }
+        tokens[i] = strtok(NULL, ", \t");
     }
 
     char* opcode = tokens[0];
@@ -181,9 +178,29 @@ int parseInstruction(const char* string, Instruction* instruction, int line) {
     } else if (strcmp(opcode, "ret") == 0) {
         if (checkTokenCount(1, tokenCount)) { return 2; }
         instruction->opId = RET;
+        instruction->data = 0;
+        instruction->r1 = 0;
         return 0;
+    } else if (strcmp(opcode, "cmp") == 0) {
+        if (checkTokenCount(3, tokenCount)) { return 2; }
+        if (t1.type == REGISTER && t2.type == IMMEDIATE) {
+            instruction->opId = CMP_R_V;
+            instruction->r1 = t1.reg;
+            instruction->data = t2.value;
+            return 0;
+        } else if (t1.type == IMMEDIATE && t2.type == REGISTER) {
+            instruction->opId = CMP_V_R;
+            instruction->r1 = t2.reg;
+            instruction->data = t1.value;
+            return 0;
+        } else if (t1.type == REGISTER && t2.type == REGISTER) {
+            instruction->opId = CMP_R_R;
+            instruction->r1 = t1.reg;
+            instruction->r2 = t2.reg;
+            return 0;
+        }
     }
-    printf(HI_RED "%d: %s is not recognized!\n" COL_RESET, line+1, current);
+    printf(HI_RED "%d: %s is not recognized!\n" COL_RESET, line+1, string);
     return 1;
 }
 
@@ -201,12 +218,12 @@ int assembleIntoRAM(char* src, char* ram, const uint16_t startVector) {
     char string[100];
     int line = 0;
     while (fgets(string, sizeof(string), file) != NULL) {
-        string[strlen(string)] = '\0';
-        string[strlen(string)-1] = '\0';
-        string[strlen(string)] = '\n';
+        if (string[strlen(string)-1] == '\n') {
+            string[strlen(string)-1] = '\0';
+        }
         Instruction instruction;
         int status;
-        if ((status = parseInstruction(string, &instruction, line)) != 0) {
+        if ((status = parseLine(string, &instruction, line)) != 0) {
             if (status == 3) {
                 continue;
             } return EXIT_FAILURE;

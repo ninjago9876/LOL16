@@ -20,7 +20,7 @@ void printToken(Token* token);
 
 int parseToken(const char *string, Token* token);
 
-int parseInstruction(const char* string, Instruction* instruction, int line);
+int parseLine(const char* string, Instruction* instruction, int line);
 
 uint32_t toMachineCode(Instruction *instruction);
 

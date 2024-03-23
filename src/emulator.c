@@ -77,7 +77,7 @@ void printCPUState(CPU* cpu) {
         "   |- le - %u\n"
         "   \\- stackptr - %u\n"
         COL_RESET, cpu->regA, cpu->regX, cpu->regY, cpu->regAX, cpu->PC,
-        cpu->zero, cpu->neq, cpu->equ, cpu->neq, cpu->gr, cpu->ge, cpu->ls, cpu->le, cpu->stackptr
+        cpu->zero, cpu->neg, cpu->equ, cpu->neq, cpu->gr, cpu->ge, cpu->ls, cpu->le, cpu->stackptr
     );
 }
 
@@ -155,14 +155,14 @@ void executeInstruction(Instruction instruction, CPU* cpu, bool verbose) {
             setRegister(r1, cpu->ram[cpu->stackptr] + (cpu->ram[cpu->stackptr-1]<<8), cpu);
             break;
         case CALL_A:
-            cpu->ram[cpu->stackptr-1] = highByte(cpu->PC+1);
-            cpu->ram[cpu->stackptr] = lowByte(cpu->PC+1);
+            cpu->ram[cpu->stackptr-1] = highByte(cpu->PC);
+            cpu->ram[cpu->stackptr] = lowByte(cpu->PC);
             cpu->stackptr -= 2;
             cpu->PC = address;
             break;
         case RET:
-            cpu->PC = cpu->ram[cpu->stackptr] + (cpu->ram[cpu->stackptr-1]<<8);
-            cpu->stackptr -= 2;
+            cpu->stackptr += 2;
+            cpu->PC = cpu->ram[cpu->stackptr] | (cpu->ram[cpu->stackptr-1]<<8);
             break;
         case CMP_R_V:
             compare(getRegister(r1, cpu), value, cpu);

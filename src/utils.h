@@ -29,6 +29,8 @@ char lowByte(uint16_t num);
 
 char highByte(uint16_t num);
 
+void trimString(char *str);
+
 uint32_t toBigEndian(uint32_t value);
 
 void switchPtrEndianess(uint16_t *ptr);
