@@ -199,7 +199,7 @@ int parseLine(const char* string, Instruction* instruction, int line) {
             instruction->r2 = t2.reg;
             return 0;
         }
-    }
+    } 
     printf(HI_RED "%d: %s is not recognized!\n" COL_RESET, line+1, string);
     return 1;
 }
