@@ -1,1 +1,1 @@
-An emulator for my custom CPU architecture, Ludicrously Ordinary Logicunit.
+An emulator for my custom CPU architecture.
